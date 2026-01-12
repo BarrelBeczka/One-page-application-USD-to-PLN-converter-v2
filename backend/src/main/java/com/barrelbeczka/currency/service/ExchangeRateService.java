@@ -13,19 +13,28 @@ public class ExchangeRateService {
     @Getter
     private Double usdToPlnRate;
 
+    private final com.barrelbeczka.currency.repository.CurrencyRateRepository currencyRateRepository;
+
+    public ExchangeRateService(com.barrelbeczka.currency.repository.CurrencyRateRepository currencyRateRepository) {
+        this.currencyRateRepository = currencyRateRepository;
+    }
+
     @PostConstruct
     public void init() {
-        // Fetch rates here. For now, mocking them or using a simple heuristic.
-        // In a real app, use RestTemplate/WebClient to call NBP API.
-        // NBP API table A: http://api.nbp.pl/api/exchangerates/rates/a/usd/
+        System.out.println("Fetching currency rates from database...");
         
-        System.out.println("Fetching currency rates...");
-        // Mocking for robustness if API fails or for simplicity as per MVP
-        // Let's assume 1 USD = 3.95 PLN
-        this.usdToPlnRate = 3.95; 
+        com.barrelbeczka.currency.model.CurrencyRate rateEntity = currencyRateRepository.findByCurrencyPair("USD/PLN")
+                .orElse(null);
+
+        if (rateEntity != null) {
+            this.usdToPlnRate = rateEntity.getRate();
+            System.out.println("Found rate in DB: " + this.usdToPlnRate);
+        } else {
+            System.out.println("Rate not found in DB! Fallback to default.");
+            this.usdToPlnRate = 3.95;
+        }
+        
         this.plnToUsdRate = 1.0 / this.usdToPlnRate;
         System.out.println("Rates initialized: USD->PLN = " + usdToPlnRate);
     }
-    
-    // Create a robust fetch implementation if desired later
 }

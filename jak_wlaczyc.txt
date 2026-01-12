@@ -1,0 +1,45 @@
+INSTRUKCJA URUCHOMIENIA PROJEKTU (DOM & UCZELNIA)
+=================================================
+
+KROK 0: BAZA DANYCH (PostgreSQL)
+--------------------------------
+1. Sprawdź czy na komputerze jest PostgreSQL.
+   - Jeśli nie: Pobierz i zainstaluj (wersja 15 lub 16).
+   - Jeśli tak (np. na uczelni): Zapytaj, jakie jest hasło do użytkownika 'postgres'.
+
+2. Utwórz bazę danych:
+   - Otwórz pgAdmin 4 lub SQL Shell (psql).
+   - Utwórz nową pustą bazę o nazwie: currency_db
+
+3. **WAŻNE - KONFIGURACJA HASŁA**:
+   Jeśli hasło do bazy na uczelni jest inne niż u Ciebie w domu (a na 99% będzie inne, np. "student", "admin" albo brak hasła):
+   - Otwórz plik w projekcie: backend/src/main/resources/application.properties
+   - Zmień linijkę: spring.datasource.password=TUTAJ_WPISZ_HASLO_Z_UCZELNI
+
+KROK 1: URUCHOMIENIE W INTELLIJ IDEA
+------------------------------------
+1. Otwórz IntelliJ IDEA.
+2. Wybierz "Open" i wskaż folder projektu.
+3. Poczekaj, aż Maven pobierze zależności (pasek na dole).
+
+KROK 2: START BACKENDU
+----------------------
+1. W drzewku plików po lewej: backend -> src -> main -> java -> com.barrelbeczka.currency
+2. Kliknij prawym na CurrencyApplication.java -> Run.
+3. Jeśli w konsoli widzisz błąd "password authentication failed" -> Wróć do KROKU 0 pkt 3.
+
+KROK 3: START FRONTENDU
+-----------------------
+1. Otwórz terminal w IntelliJ (zakładka na dole "Terminal").
+2. Wejdź do folderu frontend:
+   cd frontend
+3. Jeśli uruchamiasz tu pierwszy raz, wpisz:
+   npm install
+4. Uruchom serwer:
+   npm run dev
+5. Kliknij w link z terminala (z CTRL).
+
+PROBLEMY NA UCZELNI:
+- "Port 8080 already in use": Ktoś inny lub inny Twój proces używa tego portu. 
+  Zmień w application.properties: server.port=8081
+- "Brak node/npm": Sprawdź czy Node.js jest zainstalowany wpisując `node -v` w terminalu. Jeśli nie, musisz go zainstalować.

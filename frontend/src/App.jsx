@@ -92,11 +92,9 @@ function App() {
                     <button type="submit">Przelicz</button>
                 </form>
 
-                {convertedAmount !== null && (
-                    <h2 style={{ marginTop: '20px' }}>
-                        {amount} {sourceCurrency} = {convertedAmount.toFixed(2)} {targetCurrency}
-                    </h2>
-                )}
+                <h2 style={{ marginTop: '20px', visibility: convertedAmount !== null ? 'visible' : 'hidden' }}>
+                    {amount} {sourceCurrency} = {convertedAmount !== null ? convertedAmount.toFixed(2) : '0.00'} {targetCurrency}
+                </h2>
             </div>
 
             <div className="card">
