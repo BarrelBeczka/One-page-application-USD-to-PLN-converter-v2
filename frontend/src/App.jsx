@@ -52,7 +52,7 @@ function App() {
                 amount: parseFloat(amount)
             });
             setConvertedAmount(response.data.result);
-            fetchHistory(); // Refresh history
+            fetchHistory();
         } catch (error) {
             console.error("Conversion failed", error);
         }

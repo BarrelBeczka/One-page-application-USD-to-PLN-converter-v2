@@ -1,45 +1,41 @@
-INSTRUKCJA URUCHOMIENIA PROJEKTU (DOM & UCZELNIA)
+INSTRUKCJA URUCHOMIENIA PROJEKTU KROK PO KROKU
 =================================================
 
-KROK 0: BAZA DANYCH (PostgreSQL)
---------------------------------
-1. Sprawdź czy na komputerze jest PostgreSQL.
-   - Jeśli nie: Pobierz i zainstaluj (wersja 15 lub 16).
-   - Jeśli tak (np. na uczelni): Zapytaj, jakie jest hasło do użytkownika 'postgres'.
+KROK 1: URUCHOMIENIE BAZY DANYCH (PostgreSQL)
+---------------------------------------------
+1. Otwórz program pgAdmin 4 (lub użyj konsoli psql).
+2. Upewnij się, że serwer PostgreSQL jest uruchomiony.
+3. Sprawdź, czy masz utworzoną bazę danych o nazwie: currency_db
+4. WAŻNE: Upewnij się, że hasło do bazy zgadza się z tym w kodzie aplikacji.
+   - Otwórz plik: backend/app.py
+   - W linijce 12 znajdziesz zmienną HASLO_DO_BAZY. Wpisz tam swoje aktualne hasło do PostgreSQL (np. z uczelni).
 
-2. Utwórz bazę danych:
-   - Otwórz pgAdmin 4 lub SQL Shell (psql).
-   - Utwórz nową pustą bazę o nazwie: currency_db
+KROK 2: URUCHOMIENIE BACKENDU (Terminal nr 1)
+---------------------------------------------
+1. Otwórz w edytorze (np. VS Code) główny folder projektu.
+2. Otwórz pierwszy terminal.
+3. Wejdź do folderu backendu komendą:
+   cd backend
+4. Aktywuj środowisko wirtualne (jeśli nie istnieje, najpierw utwórz komendą: py -m venv venv):
+   - W PowerShell: venv\Scripts\Activate.ps1
+   - W CMD: venv\Scripts\activate.bat
+5. Zainstaluj wymagane biblioteki (wymagane tylko za pierwszym razem):
+   pip install -r requirements.txt
+6. Uruchom serwer backendu:
+   py app.py
 
-3. **WAŻNE - KONFIGURACJA HASŁA**:
-   Jeśli hasło do bazy na uczelni jest inne niż u Ciebie w domu (a na 99% będzie inne, np. "student", "admin" albo brak hasła):
-   - Otwórz plik w projekcie: backend/src/main/resources/application.properties
-   - Zmień linijkę: spring.datasource.password=TUTAJ_WPISZ_HASLO_Z_UCZELNI
+   -> Serwer uruchomi się na porcie 8080 (pojawi się komunikat "Running on http://127.0.0.1:8080"). 
+   -> Zostaw to okno w spokoju. NIE wyłączaj tego terminala. Niech serwer działa w tle!
 
-KROK 1: URUCHOMIENIE W INTELLIJ IDEA
-------------------------------------
-1. Otwórz IntelliJ IDEA.
-2. Wybierz "Open" i wskaż folder projektu.
-3. Poczekaj, aż Maven pobierze zależności (pasek na dole).
-
-KROK 2: START BACKENDU
-----------------------
-1. W drzewku plików po lewej: backend -> src -> main -> java -> com.barrelbeczka.currency
-2. Kliknij prawym na CurrencyApplication.java -> Run.
-3. Jeśli w konsoli widzisz błąd "password authentication failed" -> Wróć do KROKU 0 pkt 3.
-
-KROK 3: START FRONTENDU
------------------------
-1. Otwórz terminal w IntelliJ (zakładka na dole "Terminal").
-2. Wejdź do folderu frontend:
+KROK 3: URUCHOMIENIE FRONTENDU (Terminal nr 2)
+----------------------------------------------
+1. Otwórz DRUGI, zupełnie nowy terminal (np. przyciskiem '+' w VS Code).
+2. Wejdź do folderu frontendu komendą:
    cd frontend
-3. Jeśli uruchamiasz tu pierwszy raz, wpisz:
+3. Zainstaluj pakiety Node.js (wymagane tylko za pierwszym razem):
    npm install
-4. Uruchom serwer:
+4. Uruchom aplikację na frontendzie:
    npm run dev
-5. Kliknij w link z terminala (z CTRL).
-
-PROBLEMY NA UCZELNI:
-- "Port 8080 already in use": Ktoś inny lub inny Twój proces używa tego portu. 
-  Zmień w application.properties: server.port=8081
-- "Brak node/npm": Sprawdź czy Node.js jest zainstalowany wpisując `node -v` w terminalu. Jeśli nie, musisz go zainstalować.
+5. W terminalu pojawi się link (np. http://localhost:5173/ albo http://localhost:5174/). 
+6. Przytrzymaj klawisz CTRL i kliknij lewym przyciskiem myszy w ten link. 
+7. Aplikacja otworzy się w Twojej przeglądarce i wszystko powinno działać!
